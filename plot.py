@@ -9,6 +9,15 @@ class UartPlot:
         self.fig, self.ax = plt.subplots()  # Создание объекта
 
     def plot(self, data, times=0, xlable="", ylable="", name=[]):
+        """
+        Генерация графика с данными
+        :param data: данные (возмножно многомерные вида x[n,m], где n количество пакетов, m переменных в пакете
+        :param times: временной ряд, если есть
+        :param xlable: подпись оси х, если есть
+        :param ylable: подпись оси y, если есть
+        :param name: список подписей осей
+        :return:
+        """
         if name:
             for i, name in enumerate(name):
                 graph = []
