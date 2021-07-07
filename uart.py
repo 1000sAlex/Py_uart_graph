@@ -5,6 +5,7 @@ import time
 import struct
 import plot
 from plot import UartPlot
+import numpy as np
 
 
 class UartHardware:
@@ -214,6 +215,9 @@ class Uart(UartHardware, UartParser, UartPlot):
         f = open(file_name, 'w')
         f.write(str(self.data))
         f.close()
+        np.savetxt('np_'+file_name, self.data)
+
+
 
     def plt(self):
         """
@@ -235,7 +239,7 @@ def main():
     my_uart.add_s16("X")
     my_uart.add_s16("Y")
     my_uart.add_s16("Z")
-    line = my_uart.data_pars(100)
+    line = my_uart.data_pars(26)
     print(line)
     my_uart.plt()
 

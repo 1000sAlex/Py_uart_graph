@@ -9,7 +9,7 @@ if __name__ == "__main__":
     my_uart.add_s16("X")
     my_uart.add_s16("Y")
     my_uart.add_s16("Z")
-    line = my_uart.data_pars(100)
+    line = my_uart.data_pars(26)
     print(line)
     my_uart.data_save()
     my_uart.disconnect_uart()
