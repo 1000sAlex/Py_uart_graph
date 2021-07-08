@@ -6,6 +6,7 @@ import struct
 import plot
 from plot import UartPlot
 import numpy as np
+import os
 
 
 class UartHardware:
@@ -205,19 +206,30 @@ class Uart(UartHardware, UartParser, UartPlot):
         self.data = self.raw_pars(self.get_data(self.get_datalist_len() * n_lines), n_lines)
         return self.data
 
-    def data_save(self, file_name="test.txt"):
+    def data_save(self, data=[], dir_name='raw', name='data', fmt='csv'):
         """
         Сохранить данные в файл
         :param file_name: название файла с расширением
         :return:
         """
         print("Сохранение данных в файл")
-        f = open(file_name, 'w')
-        f.write(str(self.data))
+        pwd = os.getcwd()
+        path = pwd + '/' + dir_name
+        print(path)
+        if not os.path.exists(path):
+            os.mkdir(path)
+        os.chdir(path)
+        if data.any():
+            np.savetxt('{}.{}'.format(name, fmt), data, fmt='%6d', delimiter=',')
+        else:
+            np.savetxt('{}.{}'.format(name, fmt), self.data, fmt='%6d', delimiter=',')
+        os.chdir(pwd)
+        f = open('{}.{}'.format(name, fmt), 'w')
+        if data.any():
+            f.write(str(data))
+        else:
+            f.write(str(self.data))
         f.close()
-        np.savetxt('np_'+file_name, self.data)
-
-
 
     def plt(self):
         """
